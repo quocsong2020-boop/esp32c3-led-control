@@ -25,7 +25,7 @@ input.range:disabled { opacity:.45; cursor:not-allowed; }
 <div class="head"><div><div class="eyebrow">BLUETOOTH LED CONTROLLER</div><h1>LED Studio <span style="color:#39c8dc">C3</span></h1></div><div class="tag">PWM 10 kHz</div></div>
 <button class="connect" id="connect">ᛒ Kết nối ESP32C3-LED</button>
 <section class="panel"><div class="row"><strong>Trạng thái thiết bị</strong><span id="link" class="mini">● Chưa kết nối</span></div><div class="display"><div class="bulb" id="bulb">💡</div><div class="percent" id="value">--%</div><div class="statusline" id="powerText">Đang chờ kết nối</div><div class="muted" id="actual">Đầu ra thực tế: --%</div></div><div class="row"><strong>Độ sáng</strong><strong id="sliderLabel">--%</strong></div><input class="range" id="slider" type="range" min="0" max="100" step="1" value="0" disabled><div class="row small"><span>0%</span><span>50%</span><span>100%</span></div><div class="actions" style="margin-top:18px"><button id="toggle" class="power" disabled>⏻ ON / OFF</button><button id="next" disabled>⏭ NEXT</button></div><div class="presets" id="presets"><button data-cmd="L0" disabled>0%</button><button data-cmd="L1" disabled>5%</button><button data-cmd="L2" disabled>10%</button><button data-cmd="L3" disabled>25%</button><button data-cmd="L4" disabled>90%</button></div><p class="small">Chuyển độ sáng mượt trong 2 giây. GPIO4 vẫn điều khiển 5 mức và bật/tắt.</p></section>
-<section class="panel"><div class="row"><strong>⏱ Hẹn giờ tắt LED</strong><span class="mini" id="timerState">Chưa hẹn giờ</span></div><div class="timerleft" id="remaining">--:--</div><div class="timerbuttons"><button data-min="5" disabled>5 phút</button><button data-min="15" disabled>15 phút</button><button data-min="30" disabled>30 phút</button><button data-min="60" disabled>60 phút</button></div><div class="wheel-picker" role="group" aria-label="Chọn thời gian hẹn giờ"><div class="wheel" id="wheelHours" aria-label="Giờ"></div><div class="wheel" id="wheelMinutes" aria-label="Phút"></div></div><div class="timer-selection" id="timerSelection">00 giờ 30 phút</div><div class="timer-action"><button id="setTimer" disabled>Đặt giờ</button><button id="cancelTimer" disabled>Hủy</button></div><p class="small">Tối đa 12 giờ (12:00). Chọn chính xác đến phút. Đếm giờ ngay trên ESP32-C3, kể cả khi iPhone ngắt kết nối. Hết giờ: LED tắt dần trong 2 giây.</p></section>
+<section class="panel"><div class="row"><strong>⏱ Hẹn giờ tắt LED</strong><span class="mini" id="timerState">Chưa hẹn giờ</span></div><div class="timerleft" id="remaining">--:--</div><div class="timerbuttons"><button data-min="5" disabled>5 phút</button><button data-min="15" disabled>15 phút</button><button data-min="30" disabled>30 phút</button><button data-min="60" disabled>60 phút</button></div><div class="wheel-picker" role="group" aria-label="Chọn thời gian hẹn giờ"><div class="wheel" id="wheelHours" aria-label="Giờ"></div><div class="wheel" id="wheelMinutes" aria-label="Phút"></div></div><div class="timer-selection" id="timerSelection">00 giờ 30 phút</div><div class="timer-action"><button id="setTimer" disabled>Đặt giờ</button><button id="cancelTimer" disabled>Hủy</button></div><p class="small">Tối đa 9 giờ (09:00). Chọn chính xác đến phút. Đếm giờ ngay trên ESP32-C3, kể cả khi iPhone ngắt kết nối. Hết giờ: LED tắt dần trong 2 giây.</p></section>
 <div id="message" class="notice" role="status"></div><p id="lastUpdate" class="foot">Chưa nhận trạng thái</p><p class="foot">Mở trang HTTPS bằng Bluefy trên iPhone · BLE Notify đồng bộ tự động · GitHub Pages chỉ lưu giao diện</p>
 </main><script>
 'use strict';
@@ -47,10 +47,10 @@ $('toggle').addEventListener('click',()=>send('TOGGLE'));
 $('next').addEventListener('click',()=>send('NEXT'));
 document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.cmd)));
 document.querySelectorAll('[data-min]').forEach(b=>b.addEventListener('click',()=>{setWheels(Math.floor(Number(b.dataset.min)/60),Number(b.dataset.min)%60);send('S'+(Number(b.dataset.min)*60))}));
-$('setTimer').addEventListener('click',()=>{let n=wheelValues[0]*60+wheelValues[1];if(n<1||n>720){$('message').textContent='Chọn thời gian từ 1 phút đến 12 giờ';return}send('T'+n)});
+$('setTimer').addEventListener('click',()=>{let n=wheelValues[0]*60+wheelValues[1];if(n<1||n>540){$('message').textContent='Chọn thời gian từ 1 phút đến 9 giờ';return}send('T'+n)});
 $('cancelTimer').addEventListener('click',()=>send('T0'));
 
-// Hai cot cuon: gio 0..12, phut 0..59; buoc 1 phut.
+// Hai cot cuon: gio 0..9, phut 0..59; buoc 1 phut.
 const wheelValues=[0,30],wheelIds=['wheelHours','wheelMinutes'];
 let wheelTimers=[null,null],syncingWheel=false;
 function updateWheelLabel(){
@@ -64,27 +64,27 @@ function scrollWheel(i,value,smooth=false){
   const w=$(wheelIds[i]);w.scrollTo({top:value*44,behavior:smooth?'smooth':'instant'});
 }
 function setWheels(hh,mm){
-  if(hh>=12){hh=12;mm=0}
+  if(hh>=9){hh=9;mm=0}
   wheelValues.splice(0,2,hh,mm);
   wheelValues.forEach((v,i)=>scrollWheel(i,v));updateWheelLabel();
 }
 function onWheelScroll(i){
   clearTimeout(wheelTimers[i]);
   wheelTimers[i]=setTimeout(()=>{
-    const w=$(wheelIds[i]);let v=Math.max(0,Math.min(i===0?12:59,Math.round(w.scrollTop/44)));
-    if(i>0&&wheelValues[0]===12)v=0;
+    const w=$(wheelIds[i]);let v=Math.max(0,Math.min(i===0?9:59,Math.round(w.scrollTop/44)));
+    if(i>0&&wheelValues[0]===9)v=0;
     wheelValues[i]=v;
-    if(i===0&&v===12){wheelValues[1]=0;scrollWheel(1,0)}
+    if(i===0&&v===9){wheelValues[1]=0;scrollWheel(1,0)}
     scrollWheel(i,v);updateWheelLabel();
   },85);
 }
 wheelIds.forEach((id,i)=>{
-  const w=$(id),unit=['giờ','phút'][i],count=i===0?13:60;
+  const w=$(id),unit=['giờ','phút'][i],count=i===0?10:60;
   const pad=document.createElement('div');pad.className='wheel-pad';w.appendChild(pad);
   for(let n=0;n<count;n++){
     const item=document.createElement('div');item.className='wheel-item';item.dataset.value=n;
     item.innerHTML='<span>'+n+'</span><span class="wheel-unit">'+unit+'</span>';
-    item.addEventListener('click',()=>{if(wheelValues[0]===12&&i!==0&&n!==0)return;wheelValues[i]=n;if(i===0&&n===12){wheelValues[1]=0;scrollWheel(1,0)}scrollWheel(i,n,true);updateWheelLabel()});
+    item.addEventListener('click',()=>{if(wheelValues[0]===9&&i!==0&&n!==0)return;wheelValues[i]=n;if(i===0&&n===9){wheelValues[1]=0;scrollWheel(1,0)}scrollWheel(i,n,true);updateWheelLabel()});
     w.appendChild(item);
   }
   const bottom=document.createElement('div');bottom.className='wheel-pad';w.appendChild(bottom);

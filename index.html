@@ -1,6 +1,6 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1324"><title>ESP32-C3 • LED Studio</title>
 <style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eff6ff;background:#0b1324}*{box-sizing:border-box}body{margin:0;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}main{max-width:470px;margin:20px auto 40px}.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.eyebrow{color:#7f96b6;font-size:12px;letter-spacing:1.4px;font-weight:800}h1{font-size:25px;margin:3px 0}.tag{font-size:12px;background:#17263c;border:1px solid #2a3e59;border-radius:30px;padding:8px 10px;color:#b9cce4}.panel{background:#16243a;border:1px solid #293c58;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 8px 24px #0002}.connect{width:100%;background:#087f77;margin-bottom:14px}.connected{background:#3d536f}.muted{color:#a3b7d2;font-size:13px}.display{text-align:center;padding:20px 0}.bulb{font-size:48px;filter:drop-shadow(0 0 16px #facc1555)}.percent{font-size:68px;font-weight:800;letter-spacing:-3px;margin:4px 0}.statusline{font-size:14px;color:#a9c3e0}button{border:0;border-radius:13px;padding:14px 10px;background:#345c9e;color:white;font-size:16px;font-weight:700;cursor:pointer}button:disabled{opacity:.35;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.power{background:#b74359}.presets{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}.presets button{font-size:13px;padding:13px 2px;background:#2a405e}.presets button.active{background:#087f9a;outline:2px solid #6ee7ef}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.range{width:100%;accent-color:#38d2df;margin:24px 0 12px;height:30px}.small{font-size:12px;color:#a3b7d2}.timerbuttons{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}.timerbuttons button{font-size:14px;background:#304862;padding:12px 4px}.timerbuttons button.active{background:#087f9a}.timerCustom{display:flex;gap:8px}.timerCustom input{width:100%;min-width:0;background:#0c1729;color:white;border:1px solid #3b5472;border-radius:11px;padding:12px;font-size:16px}.timerCustom button{white-space:nowrap}.timerleft{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}.notice{min-height:40px;color:#f0c586;font-size:13px;line-height:1.5;padding:4px}.foot{font-size:12px;color:#7189a9;line-height:1.6;text-align:center}.mini{font-size:12px;color:#7ee2d7}
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eff6ff;background:#0b1324}*{box-sizing:border-box}body{margin:0;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}main{max-width:470px;margin:20px auto 40px}.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.eyebrow{color:#7f96b6;font-size:12px;letter-spacing:1.4px;font-weight:800}h1{font-size:25px;margin:3px 0}.tag{font-size:12px;background:#17263c;border:1px solid #2a3e59;border-radius:30px;padding:8px 10px;color:#b9cce4}.panel{background:#16243a;border:1px solid #293c58;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 8px 24px #0002}.connect{width:100%;background:#087f77;margin-bottom:14px}.connected{background:#3d536f}.muted{color:#a3b7d2;font-size:13px}.display{text-align:center;padding:20px 0}.bulb{font-size:48px;filter:drop-shadow(0 0 16px #facc1555)}.percent{font-size:68px;font-weight:800;letter-spacing:-3px;margin:4px 0}.statusline{font-size:14px;color:#a9c3e0}button{border:0;border-radius:13px;padding:14px 10px;background:#345c9e;color:white;font-size:16px;font-weight:700;cursor:pointer}button:disabled{opacity:.35;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.power{background:#b74359}.presets{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:14px}.presets button{font-size:13px;padding:13px 2px;background:#2a405e}.presets button.active{background:#087f9a;outline:2px solid #6ee7ef}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.range{width:100%;accent-color:#38d2df;margin:24px 0 12px;height:30px}.small{font-size:12px;color:#a3b7d2}.timerbuttons{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}.timerbuttons button{font-size:14px;background:#304862;padding:12px 4px}.timerbuttons button.active{background:#087f9a}.timerCustom{display:flex;gap:8px}.timerCustom input{width:100%;min-width:0;background:#0c1729;color:white;border:1px solid #3b5472;border-radius:11px;padding:12px;font-size:16px}.timerCustom button{white-space:nowrap}.timerleft{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}.notice{min-height:40px;color:#f0c586;font-size:13px;line-height:1.5;padding:4px}.foot{font-size:12px;color:#7189a9;line-height:1.6;text-align:center}.mini{font-size:12px;color:#7ee2d7}
 
 /* Chỉ làm nổi bật thanh trượt, giữ nguyên toàn bộ giao diện khác */
 input.range { appearance:none; -webkit-appearance:none; width:100%; height:5px; margin:32px 0 24px; border-radius:999px; background:linear-gradient(90deg,#00e5ff 0%,#38d2df 100%); box-shadow:0 0 13px rgba(0,229,255,.42); outline:none; cursor:pointer; }
@@ -9,12 +9,12 @@ input.range::-moz-range-thumb { width:30px; height:20px; border-radius:5px; back
 input.range:disabled { opacity:.45; cursor:not-allowed; }
 
 /* Bo chon thoi gian kieu iOS */
-.wheel-picker{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));height:220px;margin:12px 0 16px;overflow:hidden;border-radius:18px;background:#101a2c}
-.wheel-picker::before{content:"";position:absolute;z-index:1;pointer-events:none;left:5px;right:5px;top:88px;height:44px;background:#344057;border-radius:13px;opacity:.75}
+.wheel-picker{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));height:176px;max-width:310px;margin:12px auto 16px;overflow:hidden;border-radius:18px;background:#101a2c}
+.wheel-picker::before{content:"";position:absolute;z-index:1;pointer-events:none;left:5px;right:5px;top:66px;height:44px;background:#344057;border-radius:13px;opacity:.75}
 .wheel-picker::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(to bottom,#101a2c 0%,transparent 36%,transparent 64%,#101a2c 100%)}
-.wheel{position:relative;z-index:2;height:220px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.wheel{position:relative;z-index:2;height:176px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 .wheel::-webkit-scrollbar{display:none}
-.wheel-pad{height:88px;pointer-events:none}
+.wheel-pad{height:66px;pointer-events:none}
 .wheel-item{height:44px;display:flex;justify-content:center;align-items:center;gap:5px;scroll-snap-align:center;font-size:23px;color:#91a4bd;white-space:nowrap;user-select:none;-webkit-user-select:none;font-variant-numeric:tabular-nums}
 .wheel-item.selected{color:white;font-weight:650}
 .wheel-unit{font-size:15px;font-weight:600}
@@ -24,8 +24,8 @@ input.range:disabled { opacity:.45; cursor:not-allowed; }
 </style></head><body><main>
 <div class="head"><div><div class="eyebrow">BLUETOOTH LED CONTROLLER</div><h1>LED Studio <span style="color:#39c8dc">C3</span></h1></div><div class="tag">PWM 10 kHz</div></div>
 <button class="connect" id="connect">ᛒ Kết nối ESP32C3-LED</button>
-<section class="panel"><div class="row"><strong>Trạng thái thiết bị</strong><span id="link" class="mini">● Chưa kết nối</span></div><div class="display"><div class="bulb" id="bulb">💡</div><div class="percent" id="value">--%</div><div class="statusline" id="powerText">Đang chờ kết nối</div><div class="muted" id="actual">Đầu ra thực tế: --%</div></div><div class="row"><strong>Độ sáng</strong><strong id="sliderLabel">--%</strong></div><input class="range" id="slider" type="range" min="0" max="100" step="1" value="0" disabled><div class="row small"><span>0%</span><span>50%</span><span>100%</span></div><div class="actions" style="margin-top:18px"><button id="toggle" class="power" disabled>⏻ ON / OFF</button><button id="next" disabled>⏭ NEXT</button></div><div class="presets" id="presets"><button data-cmd="L0" disabled>0%</button><button data-cmd="L1" disabled>5%</button><button data-cmd="L2" disabled>10%</button><button data-cmd="L3" disabled>25%</button><button data-cmd="L4" disabled>90%</button></div><p class="small">Chuyển độ sáng mượt trong 2 giây. GPIO4 vẫn điều khiển 5 mức và bật/tắt.</p></section>
-<section class="panel"><div class="row"><strong>⏱ Hẹn giờ tắt LED</strong><span class="mini" id="timerState">Chưa hẹn giờ</span></div><div class="timerleft" id="remaining">--:--</div><div class="timerbuttons"><button data-min="5" disabled>5 phút</button><button data-min="15" disabled>15 phút</button><button data-min="30" disabled>30 phút</button><button data-min="60" disabled>60 phút</button></div><div class="wheel-picker" role="group" aria-label="Chọn thời gian hẹn giờ"><div class="wheel" id="wheelHours" aria-label="Giờ"></div><div class="wheel" id="wheelMinutes" aria-label="Phút"></div></div><div class="timer-selection" id="timerSelection">00 giờ 30 phút</div><div class="timer-action"><button id="setTimer" disabled>Đặt giờ</button><button id="cancelTimer" disabled>Hủy</button></div><p class="small">Tối đa 9 giờ (09:00). Chọn chính xác đến phút. Đếm giờ ngay trên ESP32-C3, kể cả khi iPhone ngắt kết nối. Hết giờ: LED tắt dần trong 2 giây.</p></section>
+<section class="panel"><div class="row"><strong>Trạng thái thiết bị</strong><span id="link" class="mini">● Chưa kết nối</span></div><div class="display"><div class="bulb" id="bulb">💡</div><div class="percent" id="value">--%</div><div class="statusline" id="powerText">Đang chờ kết nối</div><div class="muted" id="actual">Đầu ra thực tế: --%</div></div><div class="row"><strong>Độ sáng</strong><strong id="sliderLabel">--%</strong></div><input class="range" id="slider" type="range" min="0" max="100" step="1" value="0" disabled><div class="row small"><span>0%</span><span>50%</span><span>100%</span></div><div class="actions" style="margin-top:18px"><button id="toggle" class="power" disabled>⏻ ON / OFF</button><button id="next" disabled>⏭ NEXT</button></div><div class="presets" id="presets"><button data-cmd="L0" disabled>0%</button><button data-cmd="L1" disabled>20%</button><button data-cmd="L2" disabled>40%</button><button data-cmd="L3" disabled>60%</button><button data-cmd="L4" disabled>80%</button><button data-cmd="L5" disabled>100%</button></div><p class="small">Chuyển độ sáng mượt trong 2 giây. GPIO4 điều khiển 6 mức và bật/tắt.</p></section>
+<section class="panel"><div class="row"><strong>⏱ Hẹn giờ tắt LED</strong><span class="mini" id="timerState">Chưa hẹn giờ</span></div><div class="timerleft" id="remaining">--:--</div><div class="timerbuttons"><button data-min="5" disabled>5 phút</button><button data-min="15" disabled>15 phút</button><button data-min="30" disabled>30 phút</button><button data-min="60" disabled>60 phút</button></div><div class="wheel-picker" role="group" aria-label="Chọn thời gian hẹn giờ"><div class="wheel" id="wheelHours" aria-label="Giờ"></div><div class="wheel" id="wheelMinutes" aria-label="Phút"></div></div><div class="timer-selection" id="timerSelection">00 giờ 30 phút</div><div class="timer-action"><button id="setTimer" disabled>Đặt giờ</button><button id="cancelTimer" disabled>Hủy</button></div><p class="small">Tối đa 12 giờ (12:00). Chọn chính xác đến phút. Đếm giờ ngay trên ESP32-C3, kể cả khi iPhone ngắt kết nối. Hết giờ: LED tắt dần trong 2 giây.</p></section>
 <div id="message" class="notice" role="status"></div><p id="lastUpdate" class="foot">Chưa nhận trạng thái</p><p class="foot">Mở trang HTTPS bằng Bluefy trên iPhone · BLE Notify đồng bộ tự động · GitHub Pages chỉ lưu giao diện</p>
 </main><script>
 'use strict';
@@ -47,10 +47,10 @@ $('toggle').addEventListener('click',()=>send('TOGGLE'));
 $('next').addEventListener('click',()=>send('NEXT'));
 document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.cmd)));
 document.querySelectorAll('[data-min]').forEach(b=>b.addEventListener('click',()=>{setWheels(Math.floor(Number(b.dataset.min)/60),Number(b.dataset.min)%60);send('S'+(Number(b.dataset.min)*60))}));
-$('setTimer').addEventListener('click',()=>{let n=wheelValues[0]*60+wheelValues[1];if(n<1||n>540){$('message').textContent='Chọn thời gian từ 1 phút đến 9 giờ';return}send('T'+n)});
+$('setTimer').addEventListener('click',()=>{let n=wheelValues[0]*60+wheelValues[1];if(n<1||n>720){$('message').textContent='Chọn thời gian từ 1 phút đến 12 giờ';return}send('T'+n)});
 $('cancelTimer').addEventListener('click',()=>send('T0'));
 
-// Hai cot cuon: gio 0..9, phut 0..59; buoc 1 phut.
+// Hai cot cuon: gio 0..12, phut 0..59; buoc 1 phut.
 const wheelValues=[0,30],wheelIds=['wheelHours','wheelMinutes'];
 let wheelTimers=[null,null],syncingWheel=false;
 function updateWheelLabel(){
@@ -64,27 +64,27 @@ function scrollWheel(i,value,smooth=false){
   const w=$(wheelIds[i]);w.scrollTo({top:value*44,behavior:smooth?'smooth':'instant'});
 }
 function setWheels(hh,mm){
-  if(hh>=9){hh=9;mm=0}
+  if(hh>=12){hh=12;mm=0}
   wheelValues.splice(0,2,hh,mm);
   wheelValues.forEach((v,i)=>scrollWheel(i,v));updateWheelLabel();
 }
 function onWheelScroll(i){
   clearTimeout(wheelTimers[i]);
   wheelTimers[i]=setTimeout(()=>{
-    const w=$(wheelIds[i]);let v=Math.max(0,Math.min(i===0?9:59,Math.round(w.scrollTop/44)));
-    if(i>0&&wheelValues[0]===9)v=0;
+    const w=$(wheelIds[i]);let v=Math.max(0,Math.min(i===0?12:59,Math.round(w.scrollTop/44)));
+    if(i>0&&wheelValues[0]===12)v=0;
     wheelValues[i]=v;
-    if(i===0&&v===9){wheelValues[1]=0;scrollWheel(1,0)}
+    if(i===0&&v===12){wheelValues[1]=0;scrollWheel(1,0)}
     scrollWheel(i,v);updateWheelLabel();
   },85);
 }
 wheelIds.forEach((id,i)=>{
-  const w=$(id),unit=['giờ','phút'][i],count=i===0?10:60;
+  const w=$(id),unit=['giờ','phút'][i],count=i===0?13:60;
   const pad=document.createElement('div');pad.className='wheel-pad';w.appendChild(pad);
   for(let n=0;n<count;n++){
     const item=document.createElement('div');item.className='wheel-item';item.dataset.value=n;
     item.innerHTML='<span>'+n+'</span><span class="wheel-unit">'+unit+'</span>';
-    item.addEventListener('click',()=>{if(wheelValues[0]===9&&i!==0&&n!==0)return;wheelValues[i]=n;if(i===0&&n===9){wheelValues[1]=0;scrollWheel(1,0)}scrollWheel(i,n,true);updateWheelLabel()});
+    item.addEventListener('click',()=>{if(wheelValues[0]===12&&i!==0&&n!==0)return;wheelValues[i]=n;if(i===0&&n===12){wheelValues[1]=0;scrollWheel(1,0)}scrollWheel(i,n,true);updateWheelLabel()});
     w.appendChild(item);
   }
   const bottom=document.createElement('div');bottom.className='wheel-pad';w.appendChild(bottom);
